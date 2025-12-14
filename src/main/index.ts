@@ -49,8 +49,8 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  // IPC ping test
+  ipcMain.on('ping', () => {})
 
   ipcMain.handle('get-desktop-sources', async () => {
     return await desktopCapturer.getSources({ types: ['window', 'screen'] })

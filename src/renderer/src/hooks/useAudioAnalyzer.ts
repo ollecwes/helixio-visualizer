@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 export const useAudioAnalyzer = () => {
     const [isReady, setIsReady] = useState(false)
+    const [error, setError] = useState<string | null>(null)
     const analyserRef = useRef<AnalyserNode | null>(null)
     const dataArrayRef = useRef<Uint8Array | null>(null)
     const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null)
@@ -15,7 +16,7 @@ export const useAudioAnalyzer = () => {
                 const screenSource = sources.find((s: any) => s.name === 'Screen 1' || s.name === 'Entire Screen' || s.name.includes('Screen')) || sources[0]
 
                 if (!screenSource) {
-                    console.error("No screen source found")
+                    setError('No screen source found. Please ensure screen sharing is available.')
                     return
                 }
 
@@ -52,7 +53,8 @@ export const useAudioAnalyzer = () => {
 
                 setIsReady(true)
             } catch (e) {
-                console.error("Failed to setup audio:", e)
+                const message = e instanceof Error ? e.message : 'Unknown error'
+                setError(`Failed to capture audio: ${message}`)
             }
         }
 
@@ -64,5 +66,6 @@ export const useAudioAnalyzer = () => {
         }
     }, [])
 
-    return { analyser: analyserRef.current, dataArray: dataArrayRef.current, isReady }
+    return { analyser: analyserRef.current, dataArray: dataArrayRef.current, isReady, error }
 }
+

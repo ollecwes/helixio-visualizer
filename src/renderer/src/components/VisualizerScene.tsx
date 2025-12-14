@@ -9,7 +9,18 @@ import { useAudioAnalyzer } from '../hooks/useAudioAnalyzer'
 import { Vector2 } from 'three'
 
 export const VisualizerScene = () => {
-    const { analyser, dataArray, isReady } = useAudioAnalyzer()
+    const { analyser, dataArray, isReady, error } = useAudioAnalyzer()
+
+    if (error) {
+        return (
+            <div className="flex items-center justify-center h-full w-full bg-black text-white font-mono flex-col gap-4">
+                <div className="text-red-500 text-2xl">⚠</div>
+                <p className="text-red-400">Audio Capture Error</p>
+                <p className="text-sm text-gray-400 max-w-md text-center">{error}</p>
+                <p className="text-xs text-gray-600 mt-4">Try restarting the application</p>
+            </div>
+        )
+    }
 
     if (!isReady) {
         return (
@@ -65,14 +76,14 @@ export const VisualizerScene = () => {
 
                 {/* Smooth camera orbit */}
                 <OrbitControls
-                    enableZoom={false}
+                    enableZoom={true}
                     enablePan={false}
                     autoRotate
                     autoRotateSpeed={0.15}
-                    maxPolarAngle={Math.PI * 0.7}
-                    minPolarAngle={Math.PI * 0.3}
+                    maxPolarAngle={Math.PI}
+                    minPolarAngle={0}
                     maxDistance={15}
-                    minDistance={8}
+                    minDistance={1}
                 />
 
                 {/* Post-processing */}
