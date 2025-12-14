@@ -92,7 +92,7 @@ export const OrbitingSatellites = ({ analyser, dataArray }: OrbitingSatellitesPr
 
         let bass = 0.2, mid = 0.2, high = 0.2
         if (analyser && dataArray) {
-            analyser.getByteFrequencyData(dataArray)
+            analyser.getByteFrequencyData(dataArray as any)
             const bassRange = dataArray.slice(0, 25)
             const midRange = dataArray.slice(25, 90)
             const highRange = dataArray.slice(90, 180)
@@ -154,6 +154,7 @@ export const OrbitingSatellites = ({ analyser, dataArray }: OrbitingSatellitesPr
                     {/* Satellite with shader */}
                     <mesh ref={(el) => (satelliteRefs.current[i] = el)}>
                         <icosahedronGeometry args={[1, 2]} />
+                        {/* @ts-ignore */}
                         <glowShaderMaterial
                             ref={(el: any) => (shaderRefs.current[i] = el)}
                             uColor1={sat.color1}

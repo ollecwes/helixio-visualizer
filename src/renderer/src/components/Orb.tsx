@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react'
+import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { MeshDistortMaterial, Sphere } from '@react-three/drei'
 import * as THREE from 'three'
@@ -36,7 +36,7 @@ export const Orb = ({ analyser, dataArray }: { analyser: AnalyserNode | null, da
         let rawIntensity = 0
 
         if (analyser && dataArray) {
-            analyser.getByteFrequencyData(dataArray)
+            analyser.getByteFrequencyData(dataArray as any)
             const bassZone = dataArray.slice(0, 40)
             rawIntensity = bassZone.reduce((a, b) => a + b, 0) / bassZone.length / 255.0
         }

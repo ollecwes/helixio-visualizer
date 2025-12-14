@@ -85,7 +85,7 @@ export const DNAHelix = ({ analyser, dataArray }: DNAHelixProps) => {
         let bands = { bass: 0.3, lowMid: 0.3, mid: 0.3, highMid: 0.3, high: 0.3 }
 
         if (analyser && dataArray) {
-            analyser.getByteFrequencyData(dataArray)
+            analyser.getByteFrequencyData(dataArray as any)
             const len = dataArray.length
 
             const bassRange = dataArray.slice(0, Math.floor(len * 0.1))
@@ -232,6 +232,7 @@ export const DNAHelix = ({ analyser, dataArray }: DNAHelixProps) => {
                     scale={nodeSize}
                 >
                     <sphereGeometry args={[1, 24, 24]} />
+                    {/* @ts-ignore */}
                     <glowShaderMaterial
                         ref={(el: any) => { if (el) shaderRefs.current[i * 2] = el }}
                         uColor1={strandColors.strand1.color1}
@@ -259,6 +260,7 @@ export const DNAHelix = ({ analyser, dataArray }: DNAHelixProps) => {
                     scale={nodeSize}
                 >
                     <sphereGeometry args={[1, 24, 24]} />
+                    {/* @ts-ignore */}
                     <glowShaderMaterial
                         ref={(el: any) => { if (el) shaderRefs.current[i * 2 + 1] = el }}
                         uColor1={strandColors.strand2.color1}
@@ -280,12 +282,10 @@ export const DNAHelix = ({ analyser, dataArray }: DNAHelixProps) => {
                         <bufferGeometry>
                             <bufferAttribute
                                 attach="attributes-position"
-                                count={2}
-                                array={new Float32Array([
+                                args={[new Float32Array([
                                     Math.cos(conn.angle) * baseHelixRadius, conn.y, Math.sin(conn.angle) * baseHelixRadius,
                                     Math.cos(conn.angle + Math.PI) * baseHelixRadius, conn.y, Math.sin(conn.angle + Math.PI) * baseHelixRadius
-                                ])}
-                                itemSize={3}
+                                ]), 3]}
                             />
                         </bufferGeometry>
                         <lineBasicMaterial

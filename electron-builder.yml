@@ -12,7 +12,10 @@ files:
 asarUnpack:
   - resources/**
 win:
+  target:
+    - portable
   executableName: helixio-visualizer
+  signAndEditExecutable: false
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

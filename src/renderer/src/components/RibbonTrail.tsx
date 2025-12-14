@@ -196,15 +196,11 @@ export const RibbonTrail = ({
             <bufferGeometry ref={geometryRef}>
                 <bufferAttribute
                     attach="attributes-position"
-                    count={maxPoints * 2}
-                    array={positionArray}
-                    itemSize={3}
+                    args={[positionArray, 3]}
                 />
                 <bufferAttribute
                     attach="attributes-uv"
-                    count={maxPoints * 2}
-                    array={uvArray}
-                    itemSize={2}
+                    args={[uvArray, 2]}
                 />
             </bufferGeometry>
         </mesh>

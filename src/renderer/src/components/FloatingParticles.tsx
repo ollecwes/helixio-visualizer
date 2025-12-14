@@ -52,7 +52,7 @@ export const FloatingParticles = ({
         let rawIntensity = 0
 
         if (analyser && dataArray) {
-            analyser.getByteFrequencyData(dataArray)
+            analyser.getByteFrequencyData(dataArray as any)
             const midRange = dataArray.slice(20, 80)
             rawIntensity = midRange.reduce((a, b) => a + b, 0) / midRange.length / 255.0
         }
@@ -113,9 +113,7 @@ export const FloatingParticles = ({
             <bufferGeometry>
                 <bufferAttribute
                     attach="attributes-position"
-                    count={count}
-                    array={positions}
-                    itemSize={3}
+                    args={[positions, 3]}
                 />
             </bufferGeometry>
             <pointsMaterial
